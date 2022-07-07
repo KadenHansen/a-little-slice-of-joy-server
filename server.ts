@@ -1,5 +1,7 @@
 // DEPENDENCIES
 import express from 'express'
+import { connectToDatabase } from './models/index'
+import { homeRouter } from './controllers/home_router'
 const app = express()
 
 // CONFIGURATIONS & MIDDLEWARE
@@ -16,4 +18,12 @@ let port = (process.env.PORT as any) as number
 if (port == null || !port) {
     port = 8000
 }
-app.listen(port)
+
+connectToDatabase()
+    .then(() => {
+        app.use("/", homeRouter)
+
+        app.listen(port, () => {
+            console.log(`server started att http://localhost:${port}`)
+        })
+    })
