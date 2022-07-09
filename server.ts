@@ -1,13 +1,18 @@
 // DEPENDENCIES
 import express from 'express'
+const app = express()
+const bodyParser = require('body-parser')
+const cors = require('cors')
 import { connectToDatabase } from './models/index'
 import { homeRouter } from './controllers/home_router'
 import { menuRouter } from './controllers/menu_router'
-const app = express()
 
 // CONFIGURATIONS & MIDDLEWARE
 require('dotenv').config()
 app.use(express.json())
+app.use(express.urlencoded({extended: true}))
+app.use(bodyParser.urlencoded({extended: true}))
+app.use(cors())
 
 // ROOT
 app.get('/', (_req, res) => {
