@@ -1,6 +1,12 @@
 import { ObjectId } from "mongodb"
 
 export default class MenuItem {
+    public get category(): string {
+        return this._category;
+    }
+    public set category(value: string) {
+        this._category = value;
+    }
     public get imageDescription(): string {
         return this._imageDescription;
     }
@@ -23,6 +29,7 @@ export default class MenuItem {
         private _itemName: string, 
         private _image: URL, 
         private _imageDescription: string, 
+        private _category: string,
         public id?: ObjectId
         ) {}
 }
