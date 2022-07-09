@@ -2,6 +2,7 @@
 import express from 'express'
 import { connectToDatabase } from './models/index'
 import { homeRouter } from './controllers/home_router'
+import { menuRouter } from './controllers/menu_router'
 const app = express()
 
 // CONFIGURATIONS & MIDDLEWARE
@@ -22,6 +23,7 @@ if (port == null || !port) {
 connectToDatabase()
     .then(() => {
         app.use("/", homeRouter)
+        app.use("/gallery", menuRouter)
 
         app.listen(port, () => {
             console.log(`server started att http://localhost:${port}`)
