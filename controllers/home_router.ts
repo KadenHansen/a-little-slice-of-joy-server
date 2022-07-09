@@ -6,7 +6,6 @@ import Service from "../models/services";
 
 // Global Config
 export const homeRouter = express.Router()
-homeRouter.use(express.json())
 
 // GET
 
