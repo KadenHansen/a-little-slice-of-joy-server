@@ -8,6 +8,14 @@ import Service from "../models/services";
 export const homeRouter = express.Router()
 
 // GET
+homeRouter.get("/services", async (_req: Request, res: Response) => {
+    try {
+       const service = (await (collections.services!.find({}).toArray()) as any) as Service[]
+        res.status(200).send(service)
+    } catch (error) {
+        res.status(500).send(error)
+    }
+})
 
 // POST
 homeRouter.post("/", async (req: Request, res: Response) => {
