@@ -18,7 +18,7 @@ homeRouter.get("/services", async (_req: Request, res: Response) => {
 })
 
 // POST
-homeRouter.post("/", async (req: Request, res: Response) => {
+homeRouter.post("/services", async (req: Request, res: Response) => {
     try {
         const newService = req.body as Service
         const result = await collections.services?.insertOne(newService)
