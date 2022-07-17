@@ -33,5 +33,40 @@ homeRouter.post("/services", async (req: Request, res: Response) => {
 })
 
 // PUT
+// homeRouter.put("/services/:id", async (req: Request, res: Response) => {
+//     const id = req?.params?.id;
+
+//     try {
+//         const updatedService: Service = req.body as Service;
+//         const query = { _id: new ObjectId(id) };
+      
+//         const result = await collections.services!.updateOne(query, { $set: updatedService });
+
+//         result
+//             ? res.status(200).send(`Successfully updated service with id ${id}`)
+//             : res.status(304).send(`Service with id: ${id} not updated`);
+//     } catch (error) {
+//         console.error(error);
+//         res.status(400).send(error);
+//     }
+// })
 
 // DELETE
+homeRouter.delete("/services/:id", async (req: Request, res: Response) => {
+    const id = req?.params?.id;
+    try {
+        const query = { _id: new ObjectId(id) };
+        const result = await collections.services!.deleteOne(query);
+
+        if (result && result.deletedCount) {
+            res.status(202).send(`Successfully removed game with id ${id}`);
+        } else if (!result) {
+            res.status(400).send(`Failed to remove game with id ${id}`);
+        } else if (!result.deletedCount) {
+            res.status(404).send(`Game with id ${id} does not exist`);
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(400).send(error);
+    }
+});
