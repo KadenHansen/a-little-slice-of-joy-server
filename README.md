@@ -1,4 +1,4 @@
-#A Little Slice of Joy Server
+# A Little Slice of Joy Server
 This is the server connection for [A Little Slice of Joy](https://github.com/KadenHansen/a-little-slice-of-joy.git)
 
 ## Starting the Server
