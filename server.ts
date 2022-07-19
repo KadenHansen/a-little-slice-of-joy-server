@@ -28,7 +28,7 @@ if (port == null || !port) {
 connectToDatabase()
     .then(() => {
         app.use("/", homeRouter)
-        app.use("/gallery", menuRouter)
+        app.use("/menu", menuRouter)
 
         app.listen(port, () => {
             console.log(`server started att http://localhost:${port}`)
