@@ -50,24 +50,39 @@ menuRouter.post("/", async (req: Request, res: Response) => {
 })
 
 // PUT
+// edit a document from the services collection by id
+menuRouter.put("/:id/edit", async (req: Request, res: Response) => {
+    const id = req?.params?.id
+    try {
+        const updatedMenuItem: MenuItem = req.body as MenuItem;
+        const query = { _id: new ObjectId(id) }
+        const result = await collections.menu!.updateOne(query, { $set: updatedMenuItem })
+        result
+            ? res.status(200).send(`Successfully updated menu item with id ${id}`)
+            : res.status(304).send(`Menu item with id: ${id} not updated`);
+    } catch (error) {
+        console.error(error)
+        res.status(400).send(error)
+    }
+})
 
 // DELETE
 // delete document from menu collection by id
 menuRouter.delete("/:id/delete", async (req: Request, res: Response) => {
     const id = req?.params?.id;
     try {
-        const query = { _id: new ObjectId(id) };
-        const result = await collections.menu!.deleteOne(query);
+        const query = { _id: new ObjectId(id) }
+        const result = await collections.menu!.deleteOne(query)
 
         if (result && result.deletedCount) {
-            res.status(202).send(`Successfully removed menu item with id ${id}`);
+            res.status(202).send(`Successfully removed menu item with id ${id}`)
         } else if (!result) {
-            res.status(400).send(`Failed to remove menu item with id ${id}`);
+            res.status(400).send(`Failed to remove menu item with id ${id}`)
         } else if (!result.deletedCount) {
-            res.status(404).send(`Menu item with id ${id} does not exist`);
+            res.status(404).send(`Menu item with id ${id} does not exist`)
         }
     } catch (error) {
-        console.error(error);
-        res.status(400).send(error);
+        console.error(error)
+        res.status(400).send(error)
     }
-});
+})
