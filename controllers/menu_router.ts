@@ -8,6 +8,23 @@ import MenuItem from "../models/menuItem"
 export const menuRouter = express.Router()
 
 // GET
+// retrieve one document from services collection by id
+menuRouter.get("/:id", async (req: Request, res: Response) => {
+    const id = req?.params?.id;
+
+    try {
+        
+        const query = { _id: new ObjectId(id) };
+        const service = (await (collections.menu!.findOne(query)) as any) as MenuItem;
+
+        if (service) {
+            res.status(200).send(service);
+        }
+    } catch (error) {
+        res.status(404).send(`Unable to find matching document with id: ${req.params.id}`);
+    }
+})
+
 menuRouter.get("/", async (_req: Request, res: Response) => {
     try {
        const menuItem = (await (collections.menu!.find({}).toArray()) as any) as MenuItem[]
@@ -31,3 +48,26 @@ menuRouter.post("/", async (req: Request, res: Response) => {
         console.log(err)
     }
 })
+
+// PUT
+
+// DELETE
+// delete document from menu collection by id
+menuRouter.delete("/:id/delete", async (req: Request, res: Response) => {
+    const id = req?.params?.id;
+    try {
+        const query = { _id: new ObjectId(id) };
+        const result = await collections.menu!.deleteOne(query);
+
+        if (result && result.deletedCount) {
+            res.status(202).send(`Successfully removed menu item with id ${id}`);
+        } else if (!result) {
+            res.status(400).send(`Failed to remove menu item with id ${id}`);
+        } else if (!result.deletedCount) {
+            res.status(404).send(`Menu item with id ${id} does not exist`);
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(400).send(error);
+    }
+});
