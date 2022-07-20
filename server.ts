@@ -6,6 +6,7 @@ const cors = require('cors')
 import { connectToDatabase } from './models/index'
 import { homeRouter } from './controllers/home_router'
 import { menuRouter } from './controllers/menu_router'
+import { userRouter } from './controllers/users'
 
 // CONFIGURATIONS & MIDDLEWARE
 require('dotenv').config()
@@ -29,6 +30,7 @@ connectToDatabase()
     .then(() => {
         app.use("/", homeRouter)
         app.use("/menu", menuRouter)
+        app.use("/users", userRouter)
 
         app.listen(port, () => {
             console.log(`server started att http://localhost:${port}`)
