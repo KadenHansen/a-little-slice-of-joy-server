@@ -13,6 +13,12 @@ export default class AdminUser {
     public set passwordDigest(value: string) {
         this._passwordDigest = value
     }
+    public get email(): string {
+        return this._email
+    }
+    public set email(value: string) {
+        this._email = value
+    }
     public get firstName(): string {
         return this._firstName
     }
@@ -27,7 +33,8 @@ export default class AdminUser {
     }
     constructor(
         private _username: string, 
-        private _passwordDigest: string, 
+        private _passwordDigest: string,
+        private _email: string,
         private _firstName: string, 
         private _lastName: string,
         public id?: ObjectId
